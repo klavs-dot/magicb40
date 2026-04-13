@@ -15,7 +15,6 @@ import {
 } from "@/components/ui/tooltip";
 import {
   ChevronLeft,
-  Hexagon,
 } from "lucide-react";
 
 interface SidebarProps {
@@ -35,21 +34,29 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
     >
       {/* Logo */}
       <div className="flex h-16 items-center justify-between px-4 border-b border-border/30">
-        <Link href="/dashboard" className="flex items-center gap-2.5 overflow-hidden">
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg gold-gradient">
-            <Hexagon className="h-4 w-4 text-background" strokeWidth={2.5} />
-          </div>
-          <AnimatePresence>
-            {!collapsed && (
+        <Link href="/dashboard" className="flex items-center overflow-hidden">
+          <AnimatePresence mode="wait">
+            {collapsed ? (
               <motion.div
+                key="collapsed"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="flex h-8 w-8 shrink-0 items-center justify-center"
+              >
+                <img src="/logo.png" alt="B40" className="h-6 w-auto brightness-110" />
+              </motion.div>
+            ) : (
+              <motion.div
+                key="expanded"
                 initial={{ opacity: 0, width: 0 }}
                 animate={{ opacity: 1, width: "auto" }}
                 exit={{ opacity: 0, width: 0 }}
                 transition={{ duration: 0.2 }}
-                className="overflow-hidden whitespace-nowrap"
+                className="overflow-hidden"
               >
-                <span className="text-sm font-bold tracking-wider">MAGIC</span>
-                <span className="text-sm font-light tracking-wider text-primary ml-1">B40</span>
+                <img src="/logo.png" alt="MAGIC B40" className="h-7 w-auto brightness-110" />
               </motion.div>
             )}
           </AnimatePresence>
